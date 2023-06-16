@@ -6,9 +6,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitHelper {
     fun getInstance(): Retrofit {
         val baseUrl = "https://pixabay.com/api/"
-        val personalKey = "37377299-732b54e9475b9577a01729dc5"
-        val baseApiUrl="https://pixabay.com/api/"
-        val apiKeyUrl = "${baseApiUrl}?key=${personalKey}"
 
         return Retrofit.Builder().baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())

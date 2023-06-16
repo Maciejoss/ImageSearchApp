@@ -1,10 +1,10 @@
 package com.example.imagesearchapp.feature_images_browse.domain.models
 
 data class ExtendedImageInfo(
-    val bigImageUrl : String,
-    val userName:String,
+    val largeImageURL: String,
+    val user: String,
     val tags: String,
-    val numberOfLikes: Int,
-    val numberOfDownloads: Int,
-    val numberOfComments: Int,
-    )
+    val likes: Int,
+    val downloads: Int,
+    val comments: Int,
+)
