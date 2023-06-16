@@ -1,7 +1,6 @@
 package com.example.imagesearchapp.feature_images_browse.presentation.screens.images_browse_screen.components
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -21,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.example.imagesearchapp.feature_images_browse.domain.models.BasicImageInfo
 
 @Composable
-fun TileItem(tileInfo: BasicImageInfo,onTileClick: () -> Unit) {
+fun TileItem(tileInfo: BasicImageInfo, onTileClick: () -> Unit) {
     val customCardColors = CardDefaults.cardColors(
         contentColor = MaterialTheme.colorScheme.primary,
         containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -36,9 +35,11 @@ fun TileItem(tileInfo: BasicImageInfo,onTileClick: () -> Unit) {
 
     Spacer(modifier = Modifier.height(30.dp))
     Card(
-        modifier = Modifier.fillMaxWidth().clickable {
-                                                     onTileClick()
-        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                onTileClick()
+            },
         colors = customCardColors,
         elevation = customCardElevation
     ) {

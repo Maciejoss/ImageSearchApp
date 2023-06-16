@@ -5,8 +5,8 @@ import com.example.imagesearchapp.feature_images_browse.domain.models.ExtendedIm
 
 interface PixabayImagesRepository {
 
-    suspend fun getImages(tags:String):List<BasicImageInfo>
+    suspend fun getImages(tags: String): List<BasicImageInfo>
 
-    suspend fun getImageInfoById(id:String):ExtendedImageInfo
+    suspend fun getImageDetailsById(id: String): ExtendedImageInfo
 
 }

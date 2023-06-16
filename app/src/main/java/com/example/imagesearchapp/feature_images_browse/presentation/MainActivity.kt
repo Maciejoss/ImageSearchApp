@@ -6,19 +6,14 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.imagesearchapp.feature_images_browse.presentation.screens.image_details_screen.ImageDetailsScreen
 import com.example.imagesearchapp.feature_images_browse.presentation.screens.images_browse_screen.ImagesBrowseScreen
 import com.example.imagesearchapp.ui.theme.ImageSearchAppTheme
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -37,63 +32,11 @@ class MainActivity : ComponentActivity() {
                         composable("browseScreen") { ImagesBrowseScreen(navController = navController) }
                         composable("imageDetailsScreen/{imageId}") {
                             val imageId = it.arguments?.getString("imageId")
-                            ImagesBrowseScreen(navController = navController)
+                            ImageDetailsScreen(navController = navController, imageId!!)
                         }
                     }
                 }
             }
         }
     }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-
-interface WeatherApi {
-    suspend fun getTemperature(city: String): Int
-}
-
-class WeatherApii: WeatherApi {
-    override suspend fun getTemperature(city: String): Int {
-        return 1
-    }
-
-}
-
-class WeatherService @Inject constructor(
-    private val api: WeatherApi
-) {
-    suspend fun getTemperature(city: String): Int {
-        return api.getTemperature(city)
-    }
-}
-
-@HiltViewModel
-class WeatherViewModel @Inject constructor(
-    private val weatherService: WeatherService
-) : ViewModel() {
-
-    var bucharestTemperature = 1
-        private set
-
-    init {
-
-    }
-}
-
-@Composable
-fun WeatherScreen(
-    viewModel: WeatherViewModel = hiltViewModel()
-) {
-    val temperature = viewModel.bucharestTemperature
-
-    Text(
-        text = "Hello dziala!",
-    )
 }
