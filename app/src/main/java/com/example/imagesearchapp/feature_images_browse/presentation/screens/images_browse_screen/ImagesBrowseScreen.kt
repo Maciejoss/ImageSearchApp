@@ -1,4 +1,4 @@
-package com.example.imagesearchapp.feature_images_browse.presentation.screens.images_browse_screen.components
+package com.example.imagesearchapp.feature_images_browse.presentation.screens.images_browse_screen
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
@@ -12,7 +12,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
@@ -23,17 +22,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.imagesearchapp.feature_images_browse.domain.models.BasicImageInfo
 import com.example.imagesearchapp.feature_images_browse.presentation.screens.images_browse_screen.ImagesBrowseViewModel
+import com.example.imagesearchapp.feature_images_browse.presentation.screens.images_browse_screen.components.TileItem
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,10 +42,12 @@ fun ImagesBrowseScreen(
     navController: NavController,
     viewModel: ImagesBrowseViewModel = hiltViewModel()
 ){
+    val state = viewModel.state.value
+    val scope = rememberCoroutineScope()
+
     Scaffold {
         Column(modifier = Modifier.padding(16.dp)) {
-
-
+            Text(text = "Divide tags with space (tag1 tag2 tag3...)")
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(top = 8.dp)
@@ -54,16 +56,16 @@ fun ImagesBrowseScreen(
                 OutlinedTextField(
                     value = tagsValue.value,
                     onValueChange = { tagsValue.value = it },
-                    modifier = Modifier.weight(3f),
+                    modifier = Modifier.weight(5f),
                     label = { Text("Enter tags") }
                 )
 
                 Spacer(modifier = Modifier.width(8.dp))
 
                 ExtendedFloatingActionButton(
-                    modifier = Modifier.weight(2f),
-                    onClick = { /* Perform action */ },
-                    text = { Text(text = "search") },
+                    modifier = Modifier.weight(3f),
+                    onClick = { viewModel.onEvent(ImagesBrowseEvent.Search("tags")) },//Todo add real tags
+                    text = { Text(text = "Search") },
                     icon = { Icon(imageVector = Icons.Filled.Search, contentDescription = null) },
                     contentColor = MaterialTheme.colorScheme.onPrimary
                 )
@@ -74,11 +76,7 @@ fun ImagesBrowseScreen(
             }
 
             LazyColumn(modifier = Modifier.fillMaxWidth()) {
-                val tiles = listOf(
-                    Tile( "Tile 1"),
-                    Tile( "Tile 2"),
-                    Tile( "Tile 3")
-                )
+                val tiles = state.images
 
                 items(tiles) { tile ->
                     TileItem(tile)
@@ -88,27 +86,3 @@ fun ImagesBrowseScreen(
     }
 }
 
-data class Tile( val text: String)
-
-@Composable
-fun TileItem(tile: Tile) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(top = 8.dp)
-    ) {
-//        Image(
-//            painter = painterResource(id = tile.imageResId),
-//            contentDescription = "Tile Image",
-//            modifier = Modifier.size(50.dp),
-//            contentScale = ContentScale.Crop
-//        )
-
-        Spacer(modifier = Modifier.width(8.dp))
-
-        Text(
-            text = tile.text,
-            style = MaterialTheme.typography.bodyLarge,
-            color = Color.Black
-        )
-    }
-}

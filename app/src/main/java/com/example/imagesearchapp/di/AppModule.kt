@@ -5,6 +5,8 @@ import com.example.imagesearchapp.WeatherApii
 import com.example.imagesearchapp.WeatherService
 import com.example.imagesearchapp.feature_images_browse.data.repository.PixabayImageRepositoryImpl
 import com.example.imagesearchapp.feature_images_browse.domain.repository.PixabayImagesRepository
+import com.example.imagesearchapp.feature_images_browse.domain.use_cases.GetImagesByTags
+import com.example.imagesearchapp.feature_images_browse.domain.use_cases.ImagesBrowseUseCases
 import com.example.imagesearchapp.feature_images_browse.presentation.screens.images_browse_screen.ImagesBrowseViewModel
 import dagger.Module
 import dagger.Provides
@@ -16,10 +18,16 @@ import javax.inject.Singleton
 @Module
 object AppModule {
 
+//    @Provides
+//    @Singleton
+//    fun providesImagesBrowseViewModel(): ImagesBrowseViewModel {
+//        return ImagesBrowseViewModel()
+//    }
+
     @Provides
     @Singleton
-    fun providesImagesBrowseViewModel(): ImagesBrowseViewModel {
-        return ImagesBrowseViewModel()
+    fun providesImagesBrowseUseCases(repository: PixabayImagesRepository): ImagesBrowseUseCases {
+        return ImagesBrowseUseCases(getImages = GetImagesByTags(repository))
     }
 
     @Provides
