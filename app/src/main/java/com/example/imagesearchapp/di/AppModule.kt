@@ -3,14 +3,30 @@ package com.example.imagesearchapp.di
 import com.example.imagesearchapp.WeatherApi
 import com.example.imagesearchapp.WeatherApii
 import com.example.imagesearchapp.WeatherService
+import com.example.imagesearchapp.feature_images_browse.data.repository.PixabayImageRepositoryImpl
+import com.example.imagesearchapp.feature_images_browse.domain.repository.PixabayImagesRepository
+import com.example.imagesearchapp.feature_images_browse.presentation.screens.images_browse_screen.ImagesBrowseViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
 object AppModule {
+
+    @Provides
+    @Singleton
+    fun providesImagesBrowseViewModel(): ImagesBrowseViewModel {
+        return ImagesBrowseViewModel()
+    }
+
+    @Provides
+    @Singleton
+    fun providesPixabayImagesRepository(): PixabayImagesRepository {
+        return PixabayImageRepositoryImpl()
+    }
 
     @Provides
     fun providesWeatherApi(): WeatherApi {
