@@ -1,4 +1,4 @@
-package com.example.imagesearchapp
+package com.example.imagesearchapp.feature_images_browse.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -33,9 +33,12 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val navController = rememberNavController()
 
-                    NavHost(navController = navController, startDestination = "profile") {
-                        composable("profile") { ImagesBrowseScreen(navController = navController) }
-                        /*...*/
+                    NavHost(navController = navController, startDestination = "browseScreen") {
+                        composable("browseScreen") { ImagesBrowseScreen(navController = navController) }
+                        composable("imageDetailsScreen/{imageId}") {
+                            val imageId = it.arguments?.getString("imageId")
+                            ImagesBrowseScreen(navController = navController)
+                        }
                     }
                 }
             }
@@ -56,7 +59,7 @@ interface WeatherApi {
     suspend fun getTemperature(city: String): Int
 }
 
-class WeatherApii:WeatherApi{
+class WeatherApii: WeatherApi {
     override suspend fun getTemperature(city: String): Int {
         return 1
     }

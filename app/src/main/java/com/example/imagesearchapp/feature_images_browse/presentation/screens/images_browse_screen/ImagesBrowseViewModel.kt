@@ -19,15 +19,17 @@ class ImagesBrowseViewModel @Inject constructor(
 
     fun onEvent(event:ImagesBrowseEvent){
         when(event){
-            is ImagesBrowseEvent.SelectImage -> {
-                viewModelScope.launch {
-
-                }
-            }
-            is ImagesBrowseEvent.Search -> {
+            is ImagesBrowseEvent.SearchButtonClicked -> {
                 viewModelScope.launch {
                     _state.value = state.value.copy(
-                        images = imagesBrowseUseCases.getImages(event.tags)
+                        images = imagesBrowseUseCases.getImages(state.value.searchString)
+                    )
+                }
+            }
+            is ImagesBrowseEvent.SearchPhraseChanged -> {
+                viewModelScope.launch {
+                    _state.value = state.value.copy(
+                        searchString = event.value
                     )
                 }
             }

@@ -13,8 +13,9 @@ class PixabayImageRepositoryImpl :PixabayImagesRepository{
 
     override suspend fun getImages(tags: String): List<BasicImageInfo> {
 
+        val modifiedTagsString = tags.replace(" ","+")
         val imagesApi = RetrofitHelper.getInstance().create(ImagesApi::class.java)
-        val result = imagesApi.getImages()
+        val result = imagesApi.getImages("37377299-732b54e9475b9577a01729dc5",modifiedTagsString)
 
         if(result.body()==null)return emptyList();
         return result.body()!!.hits

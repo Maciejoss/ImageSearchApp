@@ -54,8 +54,10 @@ fun ImagesBrowseScreen(
             ) {
                 val tagsValue = remember { mutableStateOf(TextFieldValue()) }
                 OutlinedTextField(
-                    value = tagsValue.value,
-                    onValueChange = { tagsValue.value = it },
+                    value = state.searchString,
+                    onValueChange = {
+                        viewModel.onEvent(ImagesBrowseEvent.SearchPhraseChanged(it))
+                                    },
                     modifier = Modifier.weight(5f),
                     label = { Text("Enter tags") }
                 )
@@ -64,10 +66,10 @@ fun ImagesBrowseScreen(
 
                 ExtendedFloatingActionButton(
                     modifier = Modifier.weight(3f),
-                    onClick = { viewModel.onEvent(ImagesBrowseEvent.Search("tags")) },//Todo add real tags
+                    onClick = { viewModel.onEvent(ImagesBrowseEvent.SearchButtonClicked()) },
                     text = { Text(text = "Search") },
                     icon = { Icon(imageVector = Icons.Filled.Search, contentDescription = null) },
-                    contentColor = MaterialTheme.colorScheme.onPrimary
+                    contentColor = MaterialTheme.colorScheme.onSecondary
                 )
 
                 Spacer(modifier = Modifier.width(8.dp))
@@ -79,7 +81,10 @@ fun ImagesBrowseScreen(
                 val tiles = state.images
 
                 items(tiles) { tile ->
-                    TileItem(tile)
+                    TileItem(
+                        tile,
+                        onTileClick = {navController.navigate("") }
+                    )
                 }
             }
         }

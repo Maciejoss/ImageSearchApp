@@ -7,6 +7,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ImagesApi {
-    @GET("?key=37377299-732b54e9475b9577a01729dc5&q=yellow+flowers&image_type=photo")
-    suspend fun getImages() : Response<ResponseType>
+    @GET(".")
+    suspend fun getImages(@Query("key") key:String,@Query("q") tags:String) : Response<ResponseType>
 }
